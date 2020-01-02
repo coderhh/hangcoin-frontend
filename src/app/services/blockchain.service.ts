@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BlockChain } from 'hangcoin';
+import { Blockchain } from 'savjeecoin';
 import  EC from "elliptic";
 
 @Injectable({
@@ -7,7 +7,7 @@ import  EC from "elliptic";
 })
 export class BlockchainService {
   
-  public blockchainInstance = new BlockChain();
+  public blockchainInstance = new Blockchain();
   public walletKeys = [];
 
   constructor() { 
@@ -19,6 +19,20 @@ export class BlockchainService {
 
   getBlocks(){
     return this.blockchainInstance.chain;
+  }
+
+  addTransaction(tx){
+    this.blockchainInstance.addTransaction(tx);
+  }
+
+  getPendingTransactions(){
+    return this.blockchainInstance.pendingTransactions;
+  }
+
+  minePendingTransactions(){
+    this.blockchainInstance.minePendingTransactions(
+      this.walletKeys[0].publicKey
+    )
   }
 
   private generateWalletKeys() {
